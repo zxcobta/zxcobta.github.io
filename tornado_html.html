@@ -5,9 +5,29 @@
     <title>Tornado</title>
 </head>
 <body>
-    <b>1、Tornado三大核心</b>
+    <b>一、Tornado三大核心</b>
         <p>&nbsp;IOLoop: 提供了高效的IO事件循环</p>
         <p>&nbsp;IOStream: 实现scoket的异步读写</p>
         <p>&nbsp;HTTPConnection: 用来处理http请求，把响应数据返给客户端socket</p>
+    <b>二、Tornado框架的特点</b>
+        <p>&nbsp;异步非阻塞 + websockets长连接, 注重性能优越，速度快, 解决高并发（请求处理是基于回调的非阻塞调用）</p>
+    <b>三、简述Tornado框架中Future对象的作用</b>
+        <p>
+        &nbsp;# 实现异步非阻塞
+        &nbsp;视图函数yield一个future对象，future对象默认：
+        &nbsp;&nbsp;self._done = False  ，请求未完成
+        &nbsp;&nbsp;self._result = None ，请求完成后返回值，用于传递给回调函数使用。
+
+        &nbsp;tornado就会一直去检测future对象的_done是否已经变成True。
+
+        &nbsp;如果IO请求执行完毕，自动会调用future的set_result方法：
+            &nbsp;self._result = result
+            &nbsp;self._done = True</p>
+    <b>四、Tornado框架中如何编写WebSocket程序？</b>
+        <p>&nbsp;Tornado在websocket模块中提供了一个WebSocketHandler类。
+            这个类提供了和已连接的客户端通信的WebSocket事件和方法的钩子。
+            当一个新的WebSocket连接打开时，open方法被调用，
+            而on_message和on_close方法，分别在连接、接收到新的消息和客户端关闭时被调用。<br>
+            此外，WebSocketHandler类还提供了write_message方法用于向客户端发送消息，close方法用于关闭连接。</p>
 </body>
 </html>

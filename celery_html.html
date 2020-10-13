@@ -19,10 +19,23 @@
         <p>&nbsp;Producer：调用了Celery提供的API、函数或者装饰器而产生任务并交给任务队列处理的都是任务生产者。</p>
         <p>&nbsp;Result Backend：任务处理完后保存状态信息和结果，以供查询。Celery默认已支持Redis、RabbitMQ、MongoDB、Django ORM、SQLAlchemy等方式。</p>
     <b>4、celery如何实现定时任务？</b>
-        <p>&nbsp;</p>
-    <b>5、简述 celery多任务结构目录？</b>
-        <p>&npar;</p>
+        <p>&nbsp;启用Celery的定时任务需要设置CELERYBEAT_SCHEDULE</p>
+        <p>&nbsp;CELERYBEAT_SCHEDULE='djcelery.schedulers.DatabaseScheduler'#定时任务 <br>
+                &nbsp;'创建定时任务'<br>
+        # 通过配置CELERYBEAT_SCHEDULE：
+        #每30秒调用task.add <br>
+        from datetime import timedelta <br>
+        CELERYBEAT_SCHEDULE = { <br>
+            'add-every-30-seconds': { <br>
+                'task': 'tasks.add', <br>
+                'schedule': timedelta(seconds=30), <br>
+                'args': (16, 16) <br>
+            &nbsp;}, <br>
+        }</p>
+    <b>5、简述 celery多任务结构目录？</b><br>
+        <img src="./static/celery_static/celery2.PNG" alt=""> <br>
     <b>6、celery中装饰器 @app.task 和 @shared_task的区别</b>
-        <p></p>
+        <p>一般情况@app.task与celery实例如: app = Celery('proj')在一个文件中，而@shared_task直接导入,from celery import shared_task，
+        添加任务,不用实例化Celery对象</p><br>
 </body>
 </html>
